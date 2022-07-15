@@ -8,7 +8,7 @@ export const getCall = async (apiUrl) => {
         if (response.status === 200) { 
             return response?.data;
         } else {
-            return false;
+            return logError(`[Helpers Ajax] [Get Call] ${apiUrl} => `, response.status);
         }
      } catch (error) {
         return logError(`[Helpers Ajax] [Get Call] ${apiUrl} => `, error.message);

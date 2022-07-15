@@ -14,9 +14,10 @@ const Pagination = ({ apiUrl = '', pageUrl = '' }) => {
     const [data, setData] = useState([]);
     const [perPage, setPerPage] = useState((limit));
 
+    /** Fetch all data for fetching page number for pagination */
     const fetchAlLData = useCallback(async () => {
-        const albumData = await getCall(apiUrl);
-        setData(albumData);
+        const allData = await getCall(apiUrl);
+        setData(allData);
     }, [apiUrl]);
 
     useEffect(() => {
@@ -29,6 +30,7 @@ const Pagination = ({ apiUrl = '', pageUrl = '' }) => {
         };
     }, [fetchAlLData]);
 
+    /** handle click on page number */
     const handlePageClick = (e) => {
         const selectedPage = e.selected;
         const offset = selectedPage + 1;
@@ -37,6 +39,7 @@ const Pagination = ({ apiUrl = '', pageUrl = '' }) => {
         navigate(`${pageUrl}?start=${start}&limit=${limit}&pagenum=${selectedPage}&pagesize=${perPage}`);
     };
 
+    /** handle change on show number of records */
     const handleChange = (e) => {
         const selectedValue = e.target.value;
         setPerPage(selectedValue);
@@ -62,7 +65,7 @@ const Pagination = ({ apiUrl = '', pageUrl = '' }) => {
                     <ReactPaginate
                         pageCount={Math.ceil(data.length / limit)}
                         onPageChange={handlePageClick}
-                        forcePage={parseInt(pageNum)}
+                        forcePage={data.length === 0 ? -1 : parseInt(pageNum)}
                         disabledClassName="disabled"
                         previousLabel="previous"
                         nextLabel="next"

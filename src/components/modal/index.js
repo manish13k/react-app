@@ -2,7 +2,9 @@ import React, { memo } from "react";
 import { Modal,Image } from 'react-bootstrap';
 
 const DisplayModel = (props) => {
-    const { modalData: {title = '', url = '' } , username } = props;
+    const { modalData = {} , username = 'NA' } = props;
+    const {title = '', url = '' } = modalData;
+    
     return (
         <Modal
             {...props}

@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useSearchParams  } from 'react-router-dom';
+import React, { useCallback, useEffect, useState, Suspense, lazy } from "react";
+import { useSearchParams } from 'react-router-dom';
 import { Container, Table, Spinner } from 'react-bootstrap';
 import TableHead from './tableHead';
-import TableBody from './tableBody';
+const TableBody = lazy(() => import("./tableBody"));
 import { getCall } from '../../services';
 import { AlbumAPI, UserAPI } from '../../services/apiUrls';
 import Pagination from '../pagination';
@@ -15,8 +15,9 @@ const AlbumList = () => {
     const start = parseInt(searchParams.get('start')) || 0;
     const limit = parseInt(searchParams.get('limit')) || 20;
 
-    const fetchAlbumData = useCallback( async () => {
-        const apiUrl = `${AlbumAPI}?_start=${start}&_limit=${limit}`
+    /** Fetch album and user data */
+    const fetchAlbumAndUserData = useCallback( async () => {
+        const apiUrl = `${AlbumAPI}?_start=${start}&_limit=${limit}`;
         const albumData = await getCall(apiUrl);
         let userAllData = '';
         if(userdata.length === 0) {
@@ -24,25 +25,33 @@ const AlbumList = () => {
             setUserData(userAllData);
         }
         setAlbumData(albumData);
-}, [limit, start, userdata.length]);
+    }, [limit, start]);
 
     useEffect(() => {
-        fetchAlbumData()
-    }, [limit, start, fetchAlbumData])
+        let isMount = true;
+        if (isMount === true) {
+            fetchAlbumAndUserData()
+        }
+        return () => {
+            isMount = false;
+        };
+    }, [limit, start, fetchAlbumAndUserData])
 
   return (
-    <Container data-testid='album'>
+    <Container>
         <header className="album-header">
             <h2>Album Page</h2>
         </header>
         { albumData.length > 0 ? (
-        <Table striped bordered hover size="sm" responsive>
-            <TableHead />
-            <tbody>
-                <TableBody responseData={albumData} userdata={userdata} />
-                <Pagination apiUrl={AlbumAPI} pageUrl={`/`} />
-            </tbody>
-        </Table>
+            <Table striped bordered hover size="sm" responsive>
+                <TableHead />
+                <tbody>
+                    <Suspense fallback={<tr><td><Spinner animation="grow" /></td></tr>}>
+                        <TableBody responseData={albumData} userdata={userdata} />
+                    </Suspense>
+                    <Pagination apiUrl={AlbumAPI} pageUrl={`/`} />
+                </tbody>
+            </Table>
         ) : (
             <Spinner animation="grow" />
         )}

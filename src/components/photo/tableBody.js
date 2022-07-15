@@ -2,10 +2,11 @@ import React, { Fragment, memo, useState } from "react";
 import { Image } from 'react-bootstrap';
 import DisplayModel from '../modal'
 
-const TableBody = ({ responseData, username }) => {
+const TableBody = ({ responseData = [], username = 'NA' }) => {
     const [modalShow, setModalShow] = useState(false);
     const [modalData, setModelData] = useState({});
 
+    /** show modal click on thumbnail image */
     const handleClick = (obj) => {
         setModelData(obj);
         setModalShow(true);

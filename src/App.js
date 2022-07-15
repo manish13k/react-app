@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import AlbumList from "./components/album";
 import Photo from "./components/photo";
 
-function App() {
+const App = () => {
+    
     return (
             <div data-testid="main-app" className="App">
                 <Router>

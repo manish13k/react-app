@@ -1,11 +1,12 @@
 import React, { Fragment, memo } from "react";
 import { useNavigate  } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
-import { getUserName, getColorCode, setValue } from '../../helper';
+import { getUserName, setValue, generateUniqueColor } from '../../helper';
 
-const TableBody = ({ responseData, userdata }) => {
+const TableBody = ({ responseData = [], userdata = [] }) => {
     let navigate = useNavigate();
     
+    /** Handle onclick method on row */
     const handleOnclick = (obj) => {
         setValue(obj);
         navigate('/photo');
@@ -19,7 +20,7 @@ const TableBody = ({ responseData, userdata }) => {
                                 
                 return (
                     <tr className="link" key={index} onClick={() => handleOnclick({ albumId: id, username: username, title: title })}>
-                        <td className="alignCenter" style={{ backgroundColor: getColorCode()[userId] }}><div><Image src={thumbnailUrl} alt={thumbnailUrl} rounded /></div></td>
+                        <td className="alignCenter" style={{ backgroundColor: generateUniqueColor(username) }}><div><Image src={thumbnailUrl} alt={thumbnailUrl} rounded /></div></td>
                         <td>{title}</td>
                         <td>{username}</td>
                     </tr>
