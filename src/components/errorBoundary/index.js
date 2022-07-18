@@ -16,10 +16,15 @@ class ErrorBoundary extends React.Component {
 
     render() {
         if (this.state.hasError) {
-            return <h1 className="alignCenter">Something went wrong.</h1>;
+            return(
+                <div className="errorBoundary">
+                    <h1 className="alignCenter">Something went wrong.</h1>
+                    <p className="alignCenter">Sorry, Something went wrong there. Try Again.</p>
+                </div>
+            )
         }
   
-      return this.props.children; 
+        return this.props.children; 
     }
   }
 

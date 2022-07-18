@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState, Suspense, lazy } from "react";
+import React, { useCallback, useEffect, useState, Fragment, memo } from "react";
 import { useSearchParams } from 'react-router-dom';
-import { Container, Table, Spinner } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 import TableHead from './tableHead';
-const TableBody = lazy(() => import("./tableBody"));
+import TableBody from './tableBody';
 import { getCall } from '../../services';
 import { AlbumAPI, UserAPI } from '../../services/apiUrls';
 import Pagination from '../pagination';
@@ -46,17 +46,15 @@ const AlbumList = () => {
             <Table striped bordered hover size="sm" responsive>
                 <TableHead />
                 <tbody>
-                    <Suspense fallback={<tr><td><Spinner animation="grow" /></td></tr>}>
-                        <TableBody responseData={albumData} userdata={userdata} />
-                    </Suspense>
+                    <TableBody responseData={albumData} userdata={userdata} />
                     <Pagination apiUrl={AlbumAPI} pageUrl={`/`} />
                 </tbody>
             </Table>
         ) : (
-            <Spinner animation="grow" />
+            <Fragment>No Record Found</Fragment>
         )}
     </Container>
   )
 };
 
-export default AlbumList;
+export default memo(AlbumList);

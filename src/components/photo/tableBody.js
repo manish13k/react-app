@@ -18,7 +18,9 @@ const TableBody = ({ responseData = [], username = 'NA' }) => {
                 const { title = '', thumbnailUrl = '', url = '' } = item;
                 return (
                     <tr key={index}>
-                        <td onClick={() => handleClick({'url': url, 'title': title})} className="alignCenter link"><div><Image src={thumbnailUrl} alt={thumbnailUrl} rounded /></div></td>
+                        <td onClick={() => handleClick({'url': url, 'title': title})} className="alignCenter link">
+                            <div className="smallImage"><Image src={thumbnailUrl} alt={thumbnailUrl} rounded /></div>
+                        </td>
                         <td>{title}</td>
                     </tr>
                 )
@@ -27,7 +29,7 @@ const TableBody = ({ responseData = [], username = 'NA' }) => {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 username={username}
-                modalData={modalData}
+                modaldata={modalData}
             />
         </Fragment>
     )

@@ -1,19 +1,20 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import AlbumList from "./components/album";
-import Photo from "./components/photo";
+const AlbumList = lazy(() => import('./components/album'));
+const Photo = lazy(() => import('./components/photo'));
 
-const App = () => {
-    
+const App = () => { 
     return (
-            <div data-testid="main-app" className="App">
-                <Router>
+        <div data-testid="main-app" className="app">
+            <Router>
+                <Suspense fallback={<div>Loading...</div>}>
                     <Routes>
                         <Route exact path="/" element={<AlbumList/>}/>
                         <Route exact path="/photo" element={<Photo/>}/>
                     </Routes>
-                </Router>
-            </div>
+                </Suspense>
+            </Router>
+        </div>
     );
 }
 

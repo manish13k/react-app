@@ -1,16 +1,22 @@
 import {render, screen} from '@testing-library/react';
 import { Table } from 'react-bootstrap';
-import Paginate from '../index';
+import Pagination from '../index';
 import {BrowserRouter as Router} from 'react-router-dom';
+import { AlbumAPI } from '../../../services/apiUrls';
 
-describe('Pagination Component render', () => {
-    test('Render Pagination Component', () => {
-        render(<Router><Table striped bordered hover size="sm" responsive><tbody><Paginate /></tbody></Table></Router>);
+describe('Render Pagination Component', () => {
+
+    test('should be present text in pagination component ', () => {
+        render(<Router><Table><tbody><Pagination /></tbody></Table></Router>);
         expect(screen.getByText('Show Record:')).toBeInTheDocument();
         expect(screen.getByText('20')).toBeInTheDocument();
         expect(screen.getByText('30')).toBeInTheDocument();
         expect(screen.getByText('50')).toBeInTheDocument();
         expect(screen.getByText('previous')).toBeInTheDocument();
         expect(screen.getByText('next')).toBeInTheDocument();
+    });
+
+    test('should render pagination component with props', () => {
+        render(<Router><Table><tbody><Pagination apiUrl={AlbumAPI} pageUrl={`/`} /></tbody></Table></Router>);
     });
 });

@@ -5,19 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
 
 table {
   margin: 10px 0px;
 }
 
-.App {
-  font-family: sans-serif;
+.app {
   text-align: center;
 }
 
@@ -31,15 +26,21 @@ table {
   align-items: center;
 }
 
-.alignCenter div img {
+.alignCenter div.smallImage img {
   width: 150px;
   height: 150px;
 }
 
-.alignCenter img {
-  width: 100%;
+.alignCenter div img {
+  width: 600px;
+  width: 600px;
 }
 
 .link {
   cursor: pointer;
+}
+
+.errorBoundary {
+  border: 1px solid #808080;
+  margin: 20px;
 }

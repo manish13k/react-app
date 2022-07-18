@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { logError } from '../helper';
 
+/** Get api call method */
 export const getCall = async (apiUrl) => {
     try {
         const config = {headers : { "content-type": "application/octet-stream" } };

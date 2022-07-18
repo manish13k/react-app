@@ -4,11 +4,12 @@ import { Table } from 'react-bootstrap';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 describe('Album TableBody Component render', () => {
-    test('Render Album TableBody Component', () => {
-        render(<Router><Table striped bordered hover size="sm" responsive><tbody><TableBody /></tbody></Table></Router>);
+
+    test('should render tablebody with rotuter and table', () => {
+        render(<Router><Table><tbody><TableBody /></tbody></Table></Router>);
     });
 
-    test('Render Album Component', async () => {
+    test('should render album component successfully with props data and match text with props', async () => {
         const albumData = [
             {
               "userId": 1,
@@ -41,6 +42,9 @@ describe('Album TableBody Component render', () => {
                 "bs": "harness real-time e-markets"
               }
             }]
-        render(<Router><Table striped bordered hover size="sm" responsive><tbody><TableBody responseData={albumData} userdata={userdata}/></tbody></Table></Router>);
+
+        await render(<Router><Table><tbody><TableBody responseData={albumData} userdata={userdata}/></tbody></Table></Router>);
+        expect(screen.getByText('Bret')).toBeInTheDocument();
+        expect(screen.getByText('quidem molestiae enim')).toBeInTheDocument();
     });
 });

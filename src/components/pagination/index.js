@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment, useCallback} from 'react'
+import React, {useState, useEffect, Fragment, useCallback, memo} from 'react'
 import { useSearchParams, useNavigate  } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { Form } from 'react-bootstrap';
@@ -89,4 +89,4 @@ const Pagination = ({ apiUrl = '', pageUrl = '' }) => {
     );
 }
 
-export default Pagination;
+export default memo(Pagination);

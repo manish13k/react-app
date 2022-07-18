@@ -23,7 +23,7 @@ export const generateUniqueColor = (str) => {
         hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
 
-    let h = hash % 360;
+    const h = hash % 360;
     return 'hsl('+h+', '+80+'%, '+80+'%)';
 }
 

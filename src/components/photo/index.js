@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState, Suspense, lazy } from "react";
-import { useSearchParams  } from 'react-router-dom';
-import { Container, Table, Spinner } from 'react-bootstrap';
+import React, { useCallback, useEffect, useState, Fragment, memo } from "react";
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { Container, Table } from 'react-bootstrap';
 import TableHead from './tableHead';
-const TableBody = lazy(() => import("./tableBody"));
+import TableBody from './tableBody';
 import { getCall } from '../../services';
 import { PhotoAPI } from '../../services/apiUrls';
 import Pagination from '../pagination';
@@ -12,12 +12,14 @@ const PhotoPage = () => {
     const [photoData, setPhotoData] = useState([]);
     const getUserInfo = getValue();
     const { albumId = 0, username = 'NA', title = '' } = getUserInfo || {};
+    const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
     const start = parseInt(searchParams.get('start')) || 0;
     const limit = parseInt(searchParams.get('limit')) || 20;
 
     useEffect(() => {
+        if(title === '') { navigate(`/`); }
         document.title = `${username} ${title}`;
     }, [username, title])
     
@@ -36,22 +38,21 @@ const PhotoPage = () => {
     <Container>
         <header className="album-header">
             <h2>Photo Page</h2>
+            <Link to={`/`}>Go to Album Page</Link>
         </header>
         { photoData.length > 0 ? (
-        <Table striped bordered hover size="sm" responsive>
-            <TableHead />
-            <tbody>
-                <Suspense fallback={<tr><td><Spinner animation="grow" /></td></tr>}>
+            <Table striped bordered hover size="sm" responsive>
+                <TableHead />
+                <tbody>
                     <TableBody responseData={photoData} username={username} />
-                </Suspense>
-                <Pagination apiUrl={`${PhotoAPI}?albumId=${albumId}`} pageUrl={`/photo`} />
-            </tbody>
-        </Table>
+                    <Pagination apiUrl={`${PhotoAPI}?albumId=${albumId}`} pageUrl={`/photo`} />
+                </tbody>
+            </Table>
         ) : (
-            <Spinner animation="grow" />
+            <Fragment>No Record Found</Fragment>
         )}
     </Container>
   )
 };
 
-export default PhotoPage;
+export default memo(PhotoPage);
