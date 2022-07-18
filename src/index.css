@@ -31,9 +31,8 @@ table {
   height: 150px;
 }
 
-.alignCenter div img {
-  width: 600px;
-  width: 600px;
+.alignCenter img {
+  width: 100%;
 }
 
 .link {
